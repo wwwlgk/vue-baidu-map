@@ -32,7 +32,7 @@ export default {
   mixins: [
     commonMixin('abstract')
   ],
-  props: ['name', 'strokeColor', 'strokeWeight', 'strokeOpacity', 'strokeStyle', 'fillColor', 'fillOpacity', 'massClear', 'clicking'],
+  props: ['name', 'strokeColor', 'strokeWeight', 'strokeOpacity', 'strokeStyle', 'fillColor', 'fillOpacity', 'massClear', 'clicking', 'boundaries'],
   data () {
     return {
       paths: []
@@ -44,11 +44,22 @@ export default {
   watch: {
     name () {
       this.reload()
+    },
+    boundaries () {
+      this.reload()
     }
   },
   methods: {
     load () {
-      const {BMap, name} = this
+      const {BMap, name, boundaries} = this
+
+      if (name === undefined || name.replace(/(^s*)|(s*$)/g, '').length === 0) {
+        this.paths = boundaries.map(boundary => (boundary || []).split(';')
+          .map(point => (([lng, lat]) => ({lng, lat}))(point.split(',').map(p => +p))))
+        console.log('load boundaries', this.paths.length)
+        return
+      }
+
       const bd = new BMap.Boundary()
       bd.get(name, data => {
         this.paths = data.boundaries.map(boundary => (boundary || []).split(';')
