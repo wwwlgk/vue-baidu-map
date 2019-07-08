@@ -63,15 +63,21 @@
   </md-table>
 </doc-preview>
 
+### boundaries方式传递区域
+
+> 目的：
+> 为了使用离线地图方便，增加一个直接设置`boundaries`的`props`，因为使用离线地图，用户没网情况下，不可能调用
+> center="北京市"这种方式获取位置，所以使用传递坐标点方式
+
 ```html
-<baidu-map class="map" :center="{lng: 116.403765, lat: 39.914850}" :zoom="11">
-  <bm-boundary :strokeWeight="2" strokeColor="blue" :boundaries="boundariesArray"></bm-boundary>
-</baidu-map>
+<baidu-map class="map" :center="{lng: 117.211891, lat: 40.193701}" :zoom="12">
+    <bm-boundary :strokeWeight="2" strokeColor="blue" :boundaries="boundariesArray"></bm-boundary>
+  </baidu-map>
 ```
 
 #### 预览
 <doc-preview>
-  <baidu-map class="map" center="北京市平谷区" :zoom="12">
+  <baidu-map class="map" :center="{lng: 117.211891, lat: 40.193701}" :zoom="12">
     <bm-boundary :strokeWeight="2" strokeColor="blue" :boundaries="boundariesArray"></bm-boundary>
   </baidu-map>
   <md-table>

@@ -76,6 +76,9 @@ export default {
     },
     mapStyle: {
       type: Object
+    },
+    offlineApi: {
+      type: String
     }
   },
   watch: {
@@ -260,7 +263,12 @@ export default {
           }
           const $script = document.createElement('script')
           global.document.body.appendChild($script)
-          $script.src = `https://api.map.baidu.com/api?v=2.0&ak=${ak}&callback=_initBaiduMap`
+          const url = this.offlineApi || ''
+          if (url.replace(/(^s*)|(s*$)/g, '').length === 0) {
+            $script.src = `https://api.map.baidu.com/api?v=2.0&ak=${ak}&callback=_initBaiduMap`
+          } else {
+            $script.src = url + (/\?/g.test(url) ? '&' : '?') + 'callback=_initBaiduMap'
+          }
         })
         return global.BMap._preloader
       } else if (!global.BMap._preloader) {
