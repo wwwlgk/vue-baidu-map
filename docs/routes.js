@@ -450,6 +450,24 @@ const routeMap = [
         component: 'bml-curve-line'
       }
     ]
+  },
+  {
+    path: 'offline',
+    name: {
+      zh: '离线功能',
+      en: 'Offline'
+    },
+    component: CateView,
+    children: [
+      {
+        path: 'map',
+        name: {
+          zh: '离线地图',
+          en: 'Offline Map'
+        },
+        component: 'offline-map'
+      }
+    ]
   }
 ]
 
